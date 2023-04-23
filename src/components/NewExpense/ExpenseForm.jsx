@@ -1,9 +1,9 @@
 import "./ExpenseForm.css";
 import { useState } from "react";
 
-function ExpenseForm({handleAddExpense}) {
+function ExpenseForm({ handleAddExpense, handleFormClose }) {
     const [title, setTitle] = useState("");
-    const [amount, setAmount] = useState(0);
+    const [amount, setAmount] = useState("");
     const [date, setDate] = useState("");
 
     const titleChangeHandler = (e) => {
@@ -11,7 +11,7 @@ function ExpenseForm({handleAddExpense}) {
     };
 
     const amountChangeHandler = (e) => {
-        setAmount(e.target.value);
+        setAmount(parseInt(e.target.value));
     };
 
     const dateChangeHandler = (e) => {
@@ -20,10 +20,11 @@ function ExpenseForm({handleAddExpense}) {
 
    const btnClick = (e) => {
         e.preventDefault();
-        handleAddExpense({title, amount, date: new Date(date)});
+        handleAddExpense({ title, amount, date: new Date(date) });
+        handleFormClose();
         
         setTitle("");
-        setAmount(0);
+        setAmount("");
         setDate("");
    };
 
@@ -44,6 +45,7 @@ function ExpenseForm({handleAddExpense}) {
                 </div>
             </div>
             <div className="new-expense__actions">
+                <button onClick={handleFormClose} type="button">Cancel</button>
                 <button type="submit">Add Expense</button>
             </div>
         </form>
